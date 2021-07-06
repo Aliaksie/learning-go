@@ -11,10 +11,10 @@ import (
 var articles []Article
 
 type Article struct {
-	Id      string
-	Title   string
-	Desc    string
-	Content string
+	Id      string   `json:"id"`
+	Title   string   `json:"title"`
+	Desc    string   `json:"description"`
+	Content []string `json:"contnet,omitempty"`
 }
 
 func homePage(w http.ResponseWriter, r *http.Request) {
@@ -67,18 +67,17 @@ func update(w http.ResponseWriter, r *http.Request) {
 	d := json.NewDecoder(r.Body)
 	d.Decode(&article)
 
-	var articleToUpdate *Article
+	index := -1
 	for i := 0; i < len(articles); i++ {
 		if articles[i].Id == article.Id {
 			articles[i] = article
-
-			articleToUpdate = &articles[i]
+			index = i
 			break
 		}
 	}
 
-	if articleToUpdate != nil {
-		json.NewEncoder(w).Encode(articleToUpdate)
+	if index != -1 {
+		json.NewEncoder(w).Encode(articles[index])
 	} else {
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte("Failed to update article!"))
@@ -123,8 +122,8 @@ func handleRequest() {
 
 func main() {
 	articles = []Article{
-		{"1", "Hello", "Description 1", "Article Content"},
-		{"2", "Hello 2", "Description 2", "Article Content"},
+		{"1", "Hello", "No cintent", nil},
+		{"2", "Hello 2", "Description 2", []string{"Content 1", "Content 2"}},
 	}
 
 	log.Println("Initializing requests handlers")
