@@ -1,7 +1,16 @@
 # Learning Go
 First step
 
-# REST 
+# Help 
+    go help
 
- - go get -u github.com/gorilla/mux
+# Run 
+    go run .
+    go run name.go
+
+# Build 
+    go build name.go
+# Instal 3rd pkg 
  - go get github.com/gorilla/mux
+ - go get -u github.com/gorilla/mux
+ 
