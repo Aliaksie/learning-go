@@ -7,6 +7,7 @@ First step
 # Run 
     go run .
     go run name.go
+    time go run .
 
 # Build 
     go build name.go
